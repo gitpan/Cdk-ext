@@ -1,0 +1,57 @@
+#!../../../perl -w
+
+#
+# Purpose:
+#	To demonstrate the Perl5 Cdk Dialog Widget.
+
+# This is a callback to the dialog widget.
+sub callback
+{
+   # Create a message to display on the screen.
+   my @mesg = ("This is a test of the callback");
+
+   # Create the label widget.
+   my $label = new Cdk::Label ('Mesg' => \@mesg);
+
+   # Draw the label.
+   $label->draw();
+   $label->wait();
+   undef $label;
+
+   # Refresh the screen.
+   Cdk::refreshCdkScreen();
+}
+
+#
+# Initialize Cdk.
+#
+use Cdk;
+Cdk::init();
+
+# Create the dialog buttons.
+my @buttons = ("</3>Button 1", "</4>Button 2", "</5>Button 3", "</6>Button 4");
+
+# Create the dialog message.
+my @mesg = ("<C></2>This should be centered",
+		"<L></7>This should be on the left.",
+		"<R></3>This should be on the right.");
+
+# Create the dialog object.
+my $dialog = new Cdk::Dialog ('Mesg' => \@mesg,
+				'Buttons' => \@buttons,
+				'Xpos' => "CENTER",
+				'Ypos' => "CENTER",
+				'Highlight' => "A_REVERSE");
+
+# Create a key binding.
+$dialog->bind ('Key' => '?', 'Function' => sub { main::callback(); } );
+
+# Activate the object.
+my $button = $dialog->activate();
+
+# Exit Cdk.
+Cdk::end();
+
+# Print out the results.
+print "\n\n\n\n";
+print "Button Number Selected: $button\n";

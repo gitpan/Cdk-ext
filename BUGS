@@ -1,0 +1,19 @@
+Cdk Perl5 Extension,
+Mike Glover, Copyright 1995
+------------------------------------------------------------------------------
+This file will explain any bugs that I currently know of.
+
+Currently there is one bug related to the callbacks and how they are managed.
+I'm not sure if it is the way I have incorporated the callbacks into perl or
+a genuine bug in perl. (my money is my implementation). You will see the bug
+in action if you run the command interface example in demos/command. Run the
+script and press the up arrow 3 times in a row and you should get an error
+stating that you are currently out of memory. I haven't had time to really
+look into the problem, so if anyone finds it before I do, please mail me
+at glover@tuzo.erin.utoronto.ca and give me the details on how to fix it.
+
+Past that I do not know of any bugs. I know you will find them so send them
+to me when you find them.
+
+ttfn,
+	Mike

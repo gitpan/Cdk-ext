@@ -1,0 +1,35 @@
+#!../../../perl
+
+#
+# Purpose:
+#	To demonstrate the Perl5 Cdk Viewer Widget.
+
+#
+# Initialize Cdk.
+#
+use Cdk;
+Cdk::init();
+
+# Create a file selector widget to get the filename.
+my $fselect = new Cdk::Fselect ('Height' => 20, 'Width' => 30);
+
+# Activate the object.
+my $filename = $fselect->activate();
+undef $fselect;
+
+# Open the file and load it up.
+my @info = qx (cat $filename); chomp @info;
+
+# Create the viewer object.
+my $viewer = new Cdk::Viewer ('Buttons' => [ "<<OK>>" ],
+				'Height' => 20,
+				'Width' => 50);
+
+# Set the contents of the viewer.
+$viewer->set ('Title' => "</5>File: $filename", 'Info' => \@info);
+
+# Activate the viewer.
+my $selection = $viewer->activate();
+
+# End Cdk.
+Cdk::end();

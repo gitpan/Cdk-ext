@@ -1,0 +1,90 @@
+#!../../../perl -w
+
+#
+# Purpose:
+#	A cheesy little Unix command interface.
+
+#
+# Initialize Cdk.
+#
+use Cdk;
+Cdk::init();
+
+# Create the scrolling window.
+my $swindow = new Cdk::Swindow ('Title' => "<C></U>Command Output",
+					'Lines' => 500,
+					'Height' => 16,
+					'Ypos' => "TOP",
+					'Width' => 60);
+
+# Create the entry field.
+my $entry = new Cdk::Entry ('Label' => "Command >",
+				'Min' => 1,
+				'Max' => 256,
+				'Ypos' => "BOTTOM",
+				'Width' => 50,
+				'Box' => "FALSE",
+				'Filler' => "_");
+
+# Create the key bindings.
+$entry->bind ('Key' => "KEY_UP", 'Function' => sub {historyUpCB();});
+
+# Create the history array.
+my @historyList = ();
+my $current = $#historyList;
+
+# Do this forever...
+for (;;)
+{
+   # Draw the scrolling window.
+   $swindow->draw();
+
+   # Get the command.
+   my $command = $entry->activate();
+
+   # If the command was quit, then quit.
+   if ($command =~ /QUIT/i)
+   {
+      # Exit Cdk.
+      exit;
+   }
+   elsif ($command eq "clear")
+   {
+      # Add the command to the history list.
+      push (@historyList, $command);
+      $current = $#historyList;
+      
+      # Clear the window.
+      $swindow->clean();
+   }
+   else
+   {
+      # Add the command to the scrolling window.
+      $swindow->addline ('Info' => "Command: </R>$command");
+
+      # Call the exec method.
+      $swindow->exec ("Command" => $command);
+
+      # Clear the entry field.
+      $entry->clean();
+
+      # Add the command to the history list.
+      push (@historyList, $command);
+      $current = $#historyList;
+   }
+}
+
+# Start of callback routines.
+sub historyUpCB
+{
+   # If there are some commands in the history, show them
+   if ($current >= 0)
+   {
+      $entry->set ('Info' => $historyList[$current]);
+      $current--;
+   }
+   else
+   {
+      Cdk::Beep();
+   }
+}

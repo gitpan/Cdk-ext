@@ -1,0 +1,55 @@
+#!../../../perl
+
+#
+# Purpose:
+#	To demonstrate the character binding features of the
+# Perl5/Cdk extension.
+
+#
+# Load in the Cdk Extension.
+#
+use Cdk;
+Cdk::init();
+
+# This callback fills the entry field with a filename.
+sub callback
+{
+   my $entryObj = shift @_;
+
+   # Generate a list of files in the current directory.
+   my @files = <*>;
+   my $filelist	= new Cdk::Scroll (
+		'Title' => "<C></U>Pick A File",
+		'Height' => 10,
+		'Width' => 20,
+		'List' => \@files );
+
+   # Activate the scrolling list.
+   my $itemPicked	= $filelist->activate ();
+   undef $filelist;
+
+   # Set the filename.
+   $entryObj->set ('Min' => 0, 'Max' => 255, 'Value' => $files[$itemPicked]);
+   $entryObj->draw();
+}
+
+# Create a new entry object.
+$filename	= new Cdk::Entry (
+		'Label' => "Filename ",
+		'Width' => 20,
+		'Min' => 0,
+		'Max' => 256 );
+
+# Create a key binding.
+@mesg = ("<C>Hi Mike", "<C></U>How Are You?");
+$filename->bind ('Key' => '?', 'Function' => sub { main::callback ( $filename ); } );
+
+# Activate the object.
+$file   = $filename->activate();
+
+# Exit Cdk.
+Cdk::end();
+
+# Print out the results.
+print "\n\n\n\n";
+print "You typed: <$file>\n";

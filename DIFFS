@@ -1,0 +1,9 @@
+Cdk Perl5 Extension,
+Mike Glover, Copyright 1996
+------------------------------------------------------------------------------
+
+This file highlights the differences between the C library of Cdk and the
+Perl extension.
+
+	* The ability to use the pre and post callbacks on character input
+	  does not work yet. It will take a while to get working.

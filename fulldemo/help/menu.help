@@ -1,0 +1,102 @@
+</R>Purpose<!R>
+The menu widget allows the programmer to create a pull-down menu widget. 
+Complete with sub-menu items.
+
+</R>Construction Options<!R>
+A menu widget is defined using the following syntax. The variable
+</B>$menuObject<!B> contains a reference to the menu object.
+$menuObject = new Cdk::Menu ( options );
+ 
+The options are defined in the following table.
+
+</U>Option      Default Value       Type       Purpose<!U>
+Menulist    Required            Array Ref  This is the menu title list.
+Menuloc     Required            Array Ref  This is the menu title location list.
+Tattrib     Reverse             Scalar     This is the attribute of the currently highlighted menu title.
+SubTattrib  Reverse             Scalar     This is the attribute of the currently highlighted menu item.
+
+</R>Available Methods<!R>
+</B>activate<!B>
+Activation of an object means to make the object available for use. The 
+following example demonstrates how to activate a menu widget.
+$returnValue = $menuObject->activate ();
+
+The variable </B>$returnValue<!B> is an integer value which represents the
+selected item. The calculation of this value is determined as follows:
+(100 * Current Title ) + Current Subtitle
+
+To extract the correct menu item from this value use the following formula:
+$menuList = int ( $returnValue / 100 );
+$menuItem = ($returnValue % 100 );
+
+You can then dereference the string value from the array using the above two
+calculations.
+
+</B>draw<!B>
+This method draws the object on the screen. The following example demonstrates
+how to call the draw method.
+$menuObject->draw ();
+
+</B>erase<!B>
+This method removes the object from the screen. This does </B/U>NOT<!B!U> 
+destroy the object. The following example demonstrates how to call the erase 
+method.
+$menuObject->erase ();
+
+</R>Default Key Bindings<!R>
+</U>Key               Action<!U>
+Left Arrow        Moves to the menu list on the left.
+Right Arrow       Moves to the menu list on the right.
+Tab               Moves to the menu list on the right.
+Up Arrow          Moves the cursor up one menu item.
+Down Arrow        Moves the cursor up one menu item.
+Space             Moves the cursor up down menu item.
+Return            Selects the current menu item.
+CTRL-N            Exits the menu widget without selecting anything.
+CTRL-R            Refreshes the screen.
+
+</R>Tips & Tricks<!R>
+None.
+
+</R>Physical Restrictions<!R>
+</U>Restriction                    Value<!U>
+Max number of menu items.      30
+Max number of sub-menu items.  98
+
+</R>Example Use Of The Widget<!R>
+
+#!/usr/local/bin/perl
+
+#
+# Load in the Cdk Extension.
+#
+use Cdk;
+Cdk::init();
+
+# Create the menu list items.
+my @list1 = ("File", "Save", "Open", "Delete", "Exit");
+my @list2 = ("Edit", "Cut", "Copy", "Delete", "Paste");
+my @list3 = ("Help", "Help", "About...");
+my @menulist = (\@list1, \@list2, \@list3);
+my @menuloc = ("LEFT", "LEFT", "RIGHT");
+
+# Create the menu object.
+my $menu = new Cdk::Menu ('Menulist' => \@menulist,
+            			'Menuloc' => \@menuloc);
+
+# Activate the object.
+my $itemPicked = $menu->activate();
+
+# End Cdk.
+Cdk::end();
+
+# Print out the information.
+$mod = ($itemPicked % 100);
+$div = int ($itemPicked/100);
+print "\n\n\n\n";
+print "Item Selected: $menulist[$div][$mod] \n";
+
+<C><#HL(70)>
+                       Document Created: June, 1995
+                       Document Revised: November, 1995
+                       Document Revised: March, 1996

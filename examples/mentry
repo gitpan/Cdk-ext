@@ -1,0 +1,34 @@
+#!../../../perl
+
+#
+# Purpose:
+#	To demonstrate the Perl5 Cdk Mentry Widget
+
+#
+# Set up the Perl include path.
+#
+BEGIN { push(@INC, "../../lib"); }
+
+#
+# Load in the Cdk Extension.
+#
+use Cdk;
+
+#
+# Initialize Cdk.
+#
+Cdk::init();
+
+# Create the multi-line entry object.
+$mentry	= new Cdk::Mentry ('Label' => "</5>Filename: ",
+				'Fwidth' => 20,
+				'Prows' => 5,
+				'Lrows' => 10);
+
+# Activate the object.
+$filename = $mentry->activate();
+Cdk::end();
+
+# Print out the information.
+print "\n\n\n";
+print "Filename: <$filename>\n";

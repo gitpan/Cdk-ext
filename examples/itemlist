@@ -1,0 +1,31 @@
+#!../../../perl -w
+
+#
+# Purpose:
+#	To demonstrate the Perl5 Cdk Itemlist Widget.
+
+#
+# Load in the Cdk Extension.
+#
+use Cdk;
+Cdk::init();
+
+# Create a list of the months of the year.
+my @months = ("<L></B>January", "<C></B>Feburary", "<R></B>March",
+		"<L></U>April", "<C></U>May", "<R></U>June",
+		"<L></K>July", "<C></K>August", "<R></K>September",
+		"<L></R>October", "<C></R>November", "<R></R>December");
+
+# Create an itemlist widget.
+$monthIL = new Cdk::Itemlist ('Label' => "Pick a month: ",
+				'List' => \@months);
+
+# Activate the object.
+my $choice = $monthIL->activate();
+
+# Exit Cdk.
+Cdk::end();
+
+# Print out the results.
+print "\n\n\n\n";
+print "You selected: <$choice>\n";

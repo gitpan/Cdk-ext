@@ -1,0 +1,15 @@
+All Cdk widgets which have an activate method has the ability to bind keys
+to actions via the </B>bind<!B> method. The bind method takes 2 parameters; the key
+to bind and the function to bind it to.
+
+</R>The Callback Path<!R>
+When a callback is created, the callback actually gets assigned a callback.
+This is because the original callback routine is in the C code. Extending 
+the ability to bind keys in the Perl version required one of two things:
+
+<B=1.>A major rewrite of the C code to handle the callbacks externally.
+<B=2.>An extra layer in the extension to handle callbacks.
+
+I chose #2.
+<C><#HL(70)>
+<C>Document Created: November, 1995

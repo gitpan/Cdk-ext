@@ -1,0 +1,32 @@
+#!../../../perl -w
+
+#
+# Purpose:
+#	To demonstrate the Perl5 Cdk Menu Widget
+
+#
+# Initialize Cdk.
+#
+use Cdk;
+Cdk::init();
+
+# Create the menu list items.
+my @fMenu = ("File", "Save", "Open", "Delete", "Exit");
+my @eMenu = ("Edit", "Cut", "Copy", "Delete", "Paste");
+my @hMenu = ("Help", "Help", "About...");
+my @menulist = (\@fMenu, \@eMenu, \@hMenu);
+my @menuloc = ("LEFT", "LEFT", "RIGHT");
+
+# Create the menu object.
+my $menu = new Cdk::Menu ('Menulist' => \@menulist,
+				'Menuloc' => \@menuloc);
+
+# Activate the object.
+my ($menuItem, $submenuItem) = $menu->activate();
+
+# End Cdk.
+Cdk::end();
+
+# Print out the information.
+print "\n\n\n\n";
+print "Item Selected: $menulist[$menuItem]->[$submenuItem] \n";

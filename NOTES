@@ -1,0 +1,32 @@
+Cdk Perl5 Extension,
+Mike Glover, Copyright 1995
+------------------------------------------------------------------------------
+
+If you are reading this file, then you are probably having problems compiling 
+in the extension. Make sure you have read the README file fully before going
+through this document. If you have then read on...
+
+Problems Compiling on Solaris
+=============================
+
+Problem: 
+	If you are compiling the Cdk extension on a Solaris box against the 
+	Solaris curses.h file, then you will notice a conflict in the
+	curses.h file. The following message should be displayed when trying
+	to compile the Cdk.c file.
+
+"/usr/include/curses.h", line 65: invalid type combination
+"/usr/include/curses.h", line 65: warning: useless declaration
+"/usr/include/curses.h", line 65: warning: typedef declares no type name
+cc: acomp failed for Cdk.c
+
+Solution:
+	This is because both Perl and curses.h define a type named bool. Since
+	I don't use the curses bool type, you can do one of two things.
+	1) Comment out the line 
+	typedef       char bool; (should be line 65)
+	in curses.h until the compile is done. (Restore it afterwards)
+	2) Install Ncurses and compile against that.
+
+	If you comment out the bool, as harsh as that sounds, there are no
+	side effects. (I've tried it many times)

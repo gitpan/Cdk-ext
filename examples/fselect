@@ -1,0 +1,24 @@
+#!../../../perl -w
+
+#
+# Purpose:
+#	To demonstrate the Perl5 Cdk file selector widget.
+
+#
+# Load in the Cdk Extension.
+#
+use Cdk;
+Cdk::init();
+
+# Create the file selector.
+my $fselect = new Cdk::Fselect ('Height' => 20, 'Width' => 30);
+
+# Activate the object.
+my $filename = $fselect->activate();
+
+# Exit Cdk.
+Cdk::end();
+
+# Print out the results.
+print "\n\n\n\n";
+print "You selected: <$filename>\n";

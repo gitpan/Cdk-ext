@@ -1,0 +1,39 @@
+#!../../../perl -w
+
+#
+# Purpose:
+#	To demonstrate the Perl5 Cdk Selection Widget.
+
+#
+# Initialize Cdk.
+#
+use Cdk;
+Cdk::init();
+
+# Set up the selection list.
+my @listItems = ("Item 1", "Item 2", "Item 3",
+			"Item 4", "Item 5", "Item 6",
+			"Item 7", "Item 8", "Item 9");
+
+my @choices = ("Yes", "No", "Maybe");
+
+# Create the selection list object.
+my $selection = new Cdk::Selection ('Title' => "</5>Selection List",
+					'List' => \@listItems,
+					'Choices' => \@choices,
+					'Height' => 10,
+					'Width' => 20);
+
+# Activate the object.
+my @info = $selection->activate ();
+
+# Exit Cdk.
+Cdk::end();
+
+# Print out the info.
+my $x = 0;
+print "\n\n\n";
+for ($x=0; $x < $#list; $x++)
+{
+   print "Item #$x = '$info[$x]'\n";
+}

@@ -1,0 +1,184 @@
+</R>Purpose<!R>
+This widget provides a way to view any text file. The text file can contain
+Cdk display commands, or be a regular text file.
+
+</R>Construction Options<!R>
+A viewer widget is defined using the following syntax. The variable
+</B>$viewerObject<!B> contains a reference to the viewer object.
+$viewerObject = new Cdk::Viewer ( options );
+ 
+The options are defined in the following table.
+
+</U>Option      Default Value       Type       Purpose<!U>
+Buttons     Required            Array Ref  This is an array of the button labels.
+Height      Required            Scalar     The height of the window.
+Width       Required            Scalar     The width of the window.
+Xpos        Center              Scalar     This is the position of the window on the X axis.
+Ypos        Center              Scalar     This is the position of the window on the Y axis.
+Shadow      False               Scalar     This Boolean states whether the dialog box will have a shadow on the box.
+
+</R>Available Methods<!R>
+</B>activate<!B>
+Activation of an object means to make the object available for use. The 
+following example demonstrates how to activate a viewer widget.
+$returnValue = $viewerObject->activate ( options );
+
+</U>Option      Default Value       Type       Purpose<!U>
+Title       Required            Scalar     The title of the viewer widget.
+Info        Required            Array Ref  The information contained inside the viewer.
+Highlight   Reverse             Scalar     The attribute of the currently highlighted button.
+Interp      True                Scalar     This is a Boolean flag specifying whether or not the file being 
+                                           read in should have the contents interpreted for the
+                                           Cdk display codes.
+Box         True                Scalar     This Boolean states whether the dialog box will have a box drawn around it.
+
+The variable </B>$returnValue<!B> is the numeric value of the button chosen. 
+The value starts at 0 and goes up.
+
+</B>set<!B>
+Sets or resets certain attributes or features of the widget. The following
+example demonstrates how to call the set method.
+$viewerObject->set ( options );
+
+The options are defined in the following table.
+
+</U>Option      Default Value       Type       Purpose<!U>
+Highlight   Reverse             Scalar     The attribute of the currently highlighted button.
+Box         True                Scalar     This Boolean states whether the dialog box will have a box drawn around it.
+
+</B>bind<!B>
+The bind method binds keys to events. The binding is specific to the individual
+objects. The following example demonstrates how to call the bind method.
+$viewerObject->bind ( options );
+
+The options are defined in the following table.
+
+</U>Option      Default Value       Type       Purpose<!U>
+Key         Required            Scalar     This is the character to bind the event to.
+Function    Required            Scalar     This is the name of the callback function.
+
+</B>draw<!B>
+This method draws the object on the screen. The following example demonstrates
+how to call the draw method.
+$viewerObject->draw ( options );
+
+The options are defined in the following table.
+
+</U>Option      Default Value       Type       Purpose<!U>
+Box         True                Scalar     Draws the window with a box around it.
+
+</B>erase<!B>
+This method removes the object from the screen. This does </B/U>NOT<!B!U> 
+destroy the object. The following example demonstrates how to call the erase 
+method.
+$viewerObject->erase ();
+
+</B>raise<!B>
+The raise method raises the widget to the top of the screen. This means if there
+were any widgets obscuring part of the view, raising the object would bring the
+complete object into view. The following example demonstrates how to call the 
+raise method.
+$viewerObject->raise();
+
+</B>lower<!B>
+The lower method lowers the object so it doesn't obscure the view of any other 
+objects. The following example demonstrates how to call the lower method.
+$viewerObject->lower();
+
+</B>register<!B>
+The register method registers the object to the default screen. This does </R>NOT<!R>
+have to be called since the objects are registered automatically. This method
+should be called if the </B>unregister<!B> method was called. The following
+example demonstrates how to call the register method.
+$viewerObject->register();
+
+</B>unregister<!B>
+The unregister method should be called when a widget, which is part of the
+default screen, needs to be taken away temporarily. This does not delete or free
+the object, it just unmaps it from any future screen refreshes. The object can
+be registered by calling the </B>register<!B> method. The following example
+demonstrates how to call the unregister method.
+$viewerObject->unregister();
+
+</B>getwin<!B>
+This method returns a pointer to the window of the object. Not much use for this
+yet. It will be useful in the future when the drawing methods are added. The
+following example demonstrates how to call the getwin method.
+$viewerObject->getwin();
+
+</R>Default Key Bindings<!R>
+</U>Key               Action<!U>
+Tab              Selects the next button.
+Up Arrow         Moves the cursor to one line up.
+Down Arrow       Moves the cursor to one line down.
+Tab              Moves the cursor to one line down.
+Right Arrow      Scrolls the view one character to the right.
+Left Arrow       Scrolls the view list one character to the left.
+Previous Page    Moves one screen backwards.
+CTRL-B           Moves one screen backwards
+Next Page        Moves one screen forwards.
+Space            Moves one screen forwards.
+CTRL-F           Moves one screen forwards.
+g                Moves to the top of the viewer.
+1                Moves to the top of the viewer.
+G                Moves to the bottom of the viewer.
+End              Scrolls complete viewer as far left as possible.
+$                Scrolls complete viewer as far left as possible.
+Home             Scrolls complete viewer as far right as possible.
+|                Scrolls complete viewer as far right as possible.
+L                Moves halfway to the bottom of the viewer.
+l                Moves halfway to the top of the viewer.
+?                Searches upwards for given text.
+/                Searches downwards for given text.
+n                Performs last search, in the same direction.
+:                Jumps to a given line.
+i                Displays information about the current file in viewer.
+s                Displays information about the current file in viewer.
+Return           Exits the widget and returns the current selection.
+CTRL-N           Exits the widget and returns the current selection.
+CTRL-R           Refreshes the screen.
+
+</R>Tips & Tricks<!R>
+None.
+
+</R>Physical Restrictions<!R>
+</U>Restriction                    Value<!U>
+Maximum number of lines.        10000
+Maximum number of buttons.      50
+
+</R>Example Use Of The Widget<!R>
+#!/usr/local/bin/perl
+
+#
+# Load in the Cdk Extension.
+#
+use Cdk;
+Cdk::init();
+
+# Open the given filename and read it.
+my $filename = "/home/glover/cdk/cdk.h";
+open (FILE, "$filename");
+chop (@info = <FILE>);
+
+# Create the viewer object.
+my $viewer = new Cdk::Viewer ('Buttons' => [ "<<OK>>" ],
+              			'Height' => 20,
+              			'Width' => 60);
+
+# Set the contents of the object.
+$viewer->set ('Title' => "</5>File: $filename",
+		'Info' => \@info);
+
+# Activate the object.
+my $selection = $viewer->activtae();
+
+# End Cdk.
+Cdk::end();
+
+# Print out the results.
+print "\n\n\n";
+print "You Selected button: $button[$selected]\n";
+<C><#HL(70)>
+                       Document Created: June, 1995
+                       Document Revised: November, 1995
+                       Document Revised: March, 1996
